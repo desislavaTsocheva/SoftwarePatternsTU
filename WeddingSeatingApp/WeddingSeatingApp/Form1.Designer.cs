@@ -11,8 +11,6 @@ partial class Form1
         }
         base.Dispose(disposing);
     }
-
-    #region Windows Form Designer generated code
     private void InitializeComponent()
     {
         components = new System.ComponentModel.Container();
@@ -20,6 +18,4 @@ partial class Form1
         ClientSize = new Size(800, 450);
         Text = "Form1";
     }
-
-    #endregion
 }

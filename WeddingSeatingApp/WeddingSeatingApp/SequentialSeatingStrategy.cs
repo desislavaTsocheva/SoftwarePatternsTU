@@ -23,7 +23,7 @@ namespace WeddingSeatingApp
                 }
                 if (!seated)
                 {
-                    throw new Exception($"Няма достатъчно свободни маси за семейство {family.Name}!");
+                    throw new Exception($"There is not enough free tables for {family.Name} family!");
                 }
             }
         }

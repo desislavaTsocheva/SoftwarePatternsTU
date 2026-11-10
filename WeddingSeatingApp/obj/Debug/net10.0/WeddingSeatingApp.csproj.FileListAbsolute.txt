@@ -1,0 +1,4 @@
+C:\Users\I781262\WeddingSeatingApp\obj\Debug\net10.0\WeddingSeatingApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\I781262\WeddingSeatingApp\obj\Debug\net10.0\WeddingSeatingApp.AssemblyInfoInputs.cache
+C:\Users\I781262\WeddingSeatingApp\obj\Debug\net10.0\WeddingSeatingApp.AssemblyInfo.cs
+C:\Users\I781262\WeddingSeatingApp\obj\Debug\net10.0\WeddingSeatingApp.csproj.CoreCompileInputs.cache

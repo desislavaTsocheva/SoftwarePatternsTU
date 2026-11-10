@@ -15,17 +15,17 @@ public class Table : WeddingComponent, IEnumerable<Family>
             if (component is Family family)
             {
                 if (seatedFamilies.Count >= 2)
-                    throw new InvalidOperationException("На една маса могат да сядат максимум 2 семейства!");
+                    throw new InvalidOperationException("Only to 2 families can seat on one table!");
 
                 if (GetCount() + family.GetCount() > 10)
-                    throw new InvalidOperationException("На една маса могат да сядат максимум 10 души!");
+                    throw new InvalidOperationException("The max table capacity is 10 people!");
 
                 foreach (var existingFamily in seatedFamilies)
                 {
                     if (existingFamily.ForbiddenFamilies.Contains(family.Name) ||
                         family.ForbiddenFamilies.Contains(existingFamily.Name))
                     {
-                        throw new InvalidOperationException($"Семейство '{family.Name}' има забрана да сяда с '{existingFamily.Name}'!");
+                        throw new InvalidOperationException($"Family '{family.Name}' is now allowed to seat with '{existingFamily.Name}'!");
                     }
                 }
 
