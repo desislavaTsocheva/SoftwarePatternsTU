@@ -10,8 +10,6 @@
   <em>Because every beautiful wedding starts with a little organization. ♡</em>
 </p>
 
----
-
 ## 🌷 About the Project
 
 **Wedding Seating Planner** is a Windows Forms desktop application developed in C# to make organizing wedding guests and creating seating arrangements easier and more enjoyable.
@@ -37,11 +35,10 @@ Designed with a romantic aesthetic and built using object-oriented programming p
 - **Windows Forms** – Graphical user interface.
 - **.NET** – Application framework.
 - **Object-Oriented Programming (OOP)** – Organized and reusable application structure.
-- **Design Patterns** – Implementation of the Strategy Pattern.
-
+- **Design Patterns** – Implementation of the Strategy Pattern, Iterator Pattern and Composite Pattern.
 ## 💎 Software Design
 
-One of the main goals of this project is to demonstrate how software design principles and patterns can be applied to a practical application.
+One of the main goals of this project is to demonstrate how software design principles and design patterns can be applied to a practical application.
 
 ### ✨ Strategy Pattern
 
@@ -53,6 +50,32 @@ Instead of directly embedding the seating logic inside the user interface, the a
 - `SequentialSeatingStrategy` – Provides a concrete implementation for sequential guest assignment.
 
 This approach makes the application easier to maintain and allows different seating algorithms to be introduced in the future without significantly changing the existing code.
+
+### 🌸 Iterator Pattern
+
+The **Iterator Design Pattern** provides a way to access elements of a collection sequentially without exposing its internal structure.
+
+In the context of the wedding seating planner, this pattern can be used to traverse collections of families, guests, or tables in a consistent way.
+
+It helps keep collection traversal separate from the main application logic and makes it easier to work with groups of wedding guests.
+
+### 💕 Composite Pattern
+
+The **Composite Design Pattern** allows individual objects and groups of objects to be treated in a uniform way.
+
+In a wedding seating application, this pattern can represent the relationship between families and their guests, allowing both individual guests and groups to be handled through a common abstraction.
+
+It helps organize the application around a hierarchical structure and makes operations on groups of guests easier to manage.
+
+### 🎀 Why These Patterns?
+
+Together, these design patterns demonstrate different approaches to creating flexible and maintainable software:
+
+- **Strategy** – Makes seating algorithms interchangeable.
+- **Iterator** – Simplifies sequential access to collections.
+- **Composite** – Organizes individual objects and groups through a common structure.
+
+By applying these patterns, the project demonstrates how thoughtful software design can improve code organization, flexibility, and maintainability.
 
 ### 🌷 Object-Oriented Structure
 
@@ -110,6 +133,12 @@ Some ideas for future development include:
 This project was created as part of **Software Design Patterns** coursework at the Technical University.
 
 Its purpose is to demonstrate the practical application of object-oriented programming, clean code organization and design patterns through a real-world inspired desktop application.
+
+## 🌷 Interface
+
+<p align="center">
+  <img src="/WeddingSeatingApp/img.png" width="900" alt="Wedding Seating Planner">
+</p>
 
 ## 🎀 Author
 
