@@ -1,0 +1,151 @@
+﻿#nullable disable
+namespace WeddingSeatingApp
+{
+    public partial class Form1 : Form
+    {
+        private List<Family> allFamilies = new List<Family>();
+        private List<Table> allTables = new List<Table>();
+
+        private TextBox txtFamilyName;
+        private TextBox txtGuestName;
+        private ListBox lstFamilies;
+        private ListBox lstTables;
+        private Button btnAddFamily;
+        private Button btnAddGuest;
+        private Button btnAddTable;
+        private Button btnAssign;
+        private Button btnAddRestriction;
+
+        public Form1()
+        {
+            InitializeComponentCustom();
+        }
+
+        private void InitializeComponentCustom()
+        {
+            this.Text = "Организация на места за сватба";
+            this.Width = 820;
+            this.Height = 480;
+
+            txtFamilyName = new TextBox { Left = 20, Top = 20, Width = 150 };
+            btnAddFamily = new Button { Left = 180, Top = 18, Text = "Добави Семейство", Width = 140 };
+            btnAddFamily.Click += BtnAddFamily_Click;
+
+            txtGuestName = new TextBox { Left = 20, Top = 60, Width = 150 };
+            btnAddGuest = new Button { Left = 180, Top = 58, Text = "Добави Гост", Width = 140 };
+            btnAddGuest.Click += BtnAddGuest_Click;
+
+            lstFamilies = new ListBox { Left = 20, Top = 100, Width = 300, Height = 230 };
+
+            btnAddTable = new Button { Left = 350, Top = 18, Text = "Добави Нова Маса", Width = 150 };
+            btnAddTable.Click += BtnAddTable_Click;
+
+            lstTables = new ListBox { Left = 350, Top = 60, Width = 420, Height = 270 };
+
+            btnAddRestriction = new Button { Left = 20, Top = 350, Width = 300, Text = "Забрани на първите 2 сем. да са заедно", Height = 35 };
+            btnAddRestriction.Click += BtnAddRestriction_Click;
+
+            btnAssign = new Button { Left = 350, Top = 350, Width = 420, Text = "Автоматично разпределяне (Strategy)", Height = 35 };
+            btnAssign.Click += BtnAssign_Click;
+
+            this.Controls.Add(txtFamilyName);
+            this.Controls.Add(btnAddFamily);
+            this.Controls.Add(txtGuestName);
+            this.Controls.Add(btnAddGuest);
+            this.Controls.Add(lstFamilies);
+            this.Controls.Add(btnAddTable);
+            this.Controls.Add(lstTables);
+            this.Controls.Add(btnAddRestriction);
+            this.Controls.Add(btnAssign);
+        }
+
+        private void BtnAddFamily_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtFamilyName.Text))
+            {
+                var fam = new Family(txtFamilyName.Text.Trim());
+                allFamilies.Add(fam);
+                lstFamilies.Items.Add($"Семейство: {fam.Name}");
+                txtFamilyName.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Моля, въведете име на семейство!");
+            }
+        }
+
+        private void BtnAddGuest_Click(object sender, EventArgs e)
+        {
+            if (lstFamilies.SelectedItem != null && !string.IsNullOrWhiteSpace(txtGuestName.Text))
+            {
+                int index = lstFamilies.SelectedIndex;
+                var family = allFamilies[index];
+                var guest = new Guest(txtGuestName.Text.Trim(), family.Name);
+                family.Add(guest);
+                MessageBox.Show($"Успешно добавен гост '{guest.Name}' към семейство '{family.Name}'");
+                txtGuestName.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Моля, изберете семейство от списъка и въведете име на гост!");
+            }
+        }
+
+        private void BtnAddTable_Click(object sender, EventArgs e)
+        {
+            int tableNumber = allTables.Count + 1;
+            var table = new Table(tableNumber);
+            allTables.Add(table);
+            lstTables.Items.Add($"Маса #{tableNumber} (Свободна)");
+        }
+
+        private void BtnAddRestriction_Click(object sender, EventArgs e)
+        {
+            if (allFamilies.Count >= 2)
+            {
+                allFamilies[0].AddForbiddenFamily(allFamilies[1].Name);
+                MessageBox.Show($"Успешно зададена забрана: Семейство '{allFamilies[0].Name}' не може да сяда с '{allFamilies[1].Name}'!");
+            }
+            else
+            {
+                MessageBox.Show("Трябва да има поне 2 добавени семейства, за да направите забрана.");
+            }
+        }
+
+        private void BtnAssign_Click(object sender, EventArgs e)
+        {
+            if (allTables.Count == 0)
+            {
+                MessageBox.Show("Моля, добавете поне една маса преди разпределението!");
+                return;
+            }
+
+            try
+            {
+                ISeatingStrategy strategy = new SequentialSeatingStrategy();
+                strategy.SeatGuests(allFamilies, allTables);
+
+                lstTables.Items.Clear();
+                foreach (var table in allTables)
+                {
+                    string tableInfo = $"Маса {table.TableNumber} (Общо: {table.GetCount()} човека): ";
+                    foreach (var fam in table)
+                    {
+                        tableInfo += $"[{fam.Name}: ";
+                        foreach (var g in fam)
+                        {
+                            tableInfo += $"{g.Name} ";
+                        }
+                        tableInfo += "] ";
+                    }
+                    lstTables.Items.Add(tableInfo);
+                }
+                MessageBox.Show("Гостите бяха разпределени успешно!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Грешка при разпределение: " + ex.Message);
+            }
+        }
+    }
+}

@@ -1,0 +1,297 @@
+﻿#nullable disable
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace WeddingSeatingApp
+{
+    public partial class Form1 : Form
+    {
+        private List<Family> allFamilies = new List<Family>();
+        private List<Table> allTables = new List<Table>();
+
+        private TextBox txtFamilyName;
+        private TextBox txtGuestName;
+        private ListBox lstFamilies;
+        private ListBox lstTables;
+        private Button btnAddFamily;
+        private Button btnAddGuest;
+        private Button btnAddTable;
+        private Button btnAssign;
+        private Button btnAddRestriction;
+
+        private Label lblHeader;
+        private Panel panelLeft;
+        private Panel panelRight;
+
+        public Form1()
+        {
+            InitializeComponentCustom();
+        }
+
+        private void InitializeComponentCustom()
+        {
+            // --- Palette: Slate, Cool Grey & Modern Indigo ---
+            Color bgColor = Color.FromArgb(245, 247, 250);
+            Color panelBg = Color.FromArgb(255, 255, 255);
+            Color primaryAccent = Color.FromArgb(74, 119, 222);
+            Color primaryHover = Color.FromArgb(53, 94, 184);
+            Color darkText = Color.FromArgb(40, 45, 55);
+            Color borderCol = Color.FromArgb(218, 225, 233);
+
+            // --- Main Form Configuration ---
+            this.Text = "Wedding Seating Manager";
+            this.Width = 920;
+            this.Height = 560;
+            this.BackColor = bgColor;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+
+            // --- Header Title ---
+            lblHeader = new Label
+            {
+                Text = "Wedding Reception Planner",
+                Left = 30,
+                Top = 15,
+                Width = 845,
+                Height = 35,
+                Font = new Font("Segoe UI", 16, FontStyle.SemiBold),
+                ForeColor = darkText,
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            this.Controls.Add(lblHeader);
+
+            // --- Left Panel (Families & Guests Card) ---
+            panelLeft = new Panel
+            {
+                Left = 30,
+                Top = 60,
+                Width = 380,
+                Height = 435,
+                BackColor = panelBg
+            };
+            panelLeft.Paint += (s, e) => DrawPanelBorder(e, panelLeft, borderCol);
+
+            Label lblFamilySection = CreateSectionLabel("Guest Management", 20, 15);
+            panelLeft.Controls.Add(lblFamilySection);
+
+            txtFamilyName = CreateStyledTextBox(20, 50, 200);
+            txtFamilyName.PlaceholderText = "Family name...";
+            panelLeft.Controls.Add(txtFamilyName);
+
+            btnAddFamily = CreateStyledButton("Add Family", 230, 49, 130, primaryAccent, primaryHover);
+            btnAddFamily.Click += BtnAddFamily_Click;
+            panelLeft.Controls.Add(btnAddFamily);
+
+            txtGuestName = CreateStyledTextBox(20, 90, 200);
+            txtGuestName.PlaceholderText = "Guest name...";
+            panelLeft.Controls.Add(txtGuestName);
+
+            btnAddGuest = CreateStyledButton("Add Guest", 230, 89, 130, primaryAccent, primaryHover);
+            btnAddGuest.Click += BtnAddGuest_Click;
+            panelLeft.Controls.Add(btnAddGuest);
+
+            lstFamilies = CreateStyledListBox(20, 135, 340, 230);
+            panelLeft.Controls.Add(lstFamilies);
+
+            btnAddRestriction = CreateStyledButton("Restrict First 2 Families", 20, 380, 340, Color.FromArgb(108, 117, 125), Color.FromArgb(85, 94, 101));
+            btnAddRestriction.Click += BtnAddRestriction_Click;
+            panelLeft.Controls.Add(btnAddRestriction);
+
+            this.Controls.Add(panelLeft);
+
+            // --- Right Panel (Tables & Strategy Card) ---
+            panelRight = new Panel
+            {
+                Left = 430,
+                Top = 60,
+                Width = 445,
+                Height = 435,
+                BackColor = panelBg
+            };
+            panelRight.Paint += (s, e) => DrawPanelBorder(e, panelRight, borderCol);
+
+            Label lblTableSection = CreateSectionLabel("Table Allocation", 20, 15);
+            panelRight.Controls.Add(lblTableSection);
+
+            btnAddTable = CreateStyledButton("Create New Table", 20, 49, 405, primaryAccent, primaryHover);
+            btnAddTable.Click += BtnAddTable_Click;
+            panelRight.Controls.Add(btnAddTable);
+
+            lstTables = CreateStyledListBox(20, 95, 405, 270);
+            panelRight.Controls.Add(lstTables);
+
+            btnAssign = CreateStyledButton("Run Assignment Strategy", 20, 380, 405, Color.FromArgb(40, 167, 69), Color.FromArgb(33, 136, 56));
+            btnAssign.Font = new Font("Segoe UI", 9.5f, FontStyle.Bold);
+            btnAssign.Click += BtnAssign_Click;
+            panelRight.Controls.Add(btnAssign);
+
+            this.Controls.Add(panelRight);
+        }
+
+        // --- Helper Methods for Styling ---
+        private Label CreateSectionLabel(string text, int left, int top)
+        {
+            return new Label
+            {
+                Text = text,
+                Left = left,
+                Top = top,
+                Width = 300,
+                Height = 25,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                ForeColor = Color.FromArgb(60, 65, 75)
+            };
+        }
+
+        private TextBox CreateStyledTextBox(int left, int top, int width)
+        {
+            return new TextBox
+            {
+                Left = left,
+                Top = top,
+                Width = width,
+                Height = 26,
+                Font = new Font("Segoe UI", 10),
+                BackColor = Color.White,
+                ForeColor = Color.FromArgb(40, 45, 55)
+            };
+        }
+
+        private Button CreateStyledButton(string text, int left, int top, int width, Color backColor, Color hoverColor)
+        {
+            var btn = new Button
+            {
+                Text = text,
+                Left = left,
+                Top = top,
+                Width = width,
+                Height = 32,
+                Font = new Font("Segoe UI", 9, FontStyle.SemiBold),
+                BackColor = backColor,
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btn.FlatAppearance.BorderSize = 0;
+            btn.MouseEnter += (s, e) => btn.BackColor = hoverColor;
+            btn.MouseLeave += (s, e) => btn.BackColor = backColor;
+            return btn;
+        }
+
+        private ListBox CreateStyledListBox(int left, int top, int width, int height)
+        {
+            return new ListBox
+            {
+                Left = left,
+                Top = top,
+                Width = width,
+                Height = height,
+                Font = new Font("Segoe UI", 9.5f),
+                BackColor = Color.FromArgb(252, 253, 255),
+                ForeColor = Color.FromArgb(40, 45, 55),
+                BorderStyle = BorderStyle.FixedSingle
+            };
+        }
+
+        private void DrawPanelBorder(PaintEventArgs e, Panel panel, Color borderColor)
+        {
+            using (var pen = new Pen(borderColor, 1))
+            {
+                e.Graphics.DrawRectangle(pen, 0, 0, panel.Width - 1, panel.Height - 1);
+            }
+        }
+
+        // --- Event Handlers & Logic ---
+        private void BtnAddFamily_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtFamilyName.Text))
+            {
+                var fam = new Family(txtFamilyName.Text.Trim());
+                allFamilies.Add(fam);
+                lstFamilies.Items.Add($"Family: {fam.Name}");
+                txtFamilyName.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Please enter a family name.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void BtnAddGuest_Click(object sender, EventArgs e)
+        {
+            if (lstFamilies.SelectedItem != null && !string.IsNullOrWhiteSpace(txtGuestName.Text))
+            {
+                int index = lstFamilies.SelectedIndex;
+                var family = allFamilies[index];
+                var guest = new Guest(txtGuestName.Text.Trim(), family.Name);
+                family.Add(guest);
+                MessageBox.Show($"Successfully added guest '{guest.Name}' to family '{family.Name}'.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtGuestName.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Please select a family from the list and enter a guest name.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void BtnAddTable_Click(object sender, EventArgs e)
+        {
+            int tableNumber = allTables.Count + 1;
+            var table = new Table(tableNumber);
+            allTables.Add(table);
+            lstTables.Items.Add($"Table #{tableNumber} (Available)");
+        }
+
+        private void BtnAddRestriction_Click(object sender, EventArgs e)
+        {
+            if (allFamilies.Count >= 2)
+            {
+                allFamilies[0].AddForbiddenFamily(allFamilies[1].Name);
+                MessageBox.Show($"Restriction added: Family '{allFamilies[0].Name}' cannot sit with '{allFamilies[1].Name}'.", "Restriction Set", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("At least 2 families are required to apply a restriction.", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void BtnAssign_Click(object sender, EventArgs e)
+        {
+            if (allTables.Count == 0)
+            {
+                MessageBox.Show("Please add at least one table before running assignment.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                ISeatingStrategy strategy = new SequentialSeatingStrategy();
+                strategy.SeatGuests(allFamilies, allTables);
+
+                lstTables.Items.Clear();
+                foreach (var table in allTables)
+                {
+                    string tableInfo = $"Table {table.TableNumber} (Total: {table.GetCount()}): ";
+                    foreach (var fam in table)
+                    {
+                        tableInfo += $"[{fam.Name}: ";
+                        foreach (var g in fam)
+                        {
+                            tableInfo += $"{g.Name} ";
+                        }
+                        tableInfo += "] ";
+                    }
+                    lstTables.Items.Add(tableInfo);
+                }
+                MessageBox.Show("Guests have been successfully assigned to tables.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Assignment error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+}

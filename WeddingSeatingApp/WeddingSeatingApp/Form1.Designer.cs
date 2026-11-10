@@ -1,21 +1,24 @@
-﻿namespace WeddingSeatingApp;
-
-partial class Form1
+﻿namespace WeddingSeatingApp
 {
-    private System.ComponentModel.IContainer components = null;
-    protected override void Dispose(bool disposing)
+    partial class Form1
     {
-        if (disposing && (components != null))
+        private System.ComponentModel.IContainer components = null;
+
+        protected override void Dispose(bool disposing)
         {
-            components.Dispose();
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
-        base.Dispose(disposing);
-    }
-    private void InitializeComponent()
-    {
-        components = new System.ComponentModel.Container();
-        AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(800, 450);
-        Text = "Form1";
+
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(860, 530);
+            this.Text = "Wedding Seating Manager";
+        }
     }
 }
