@@ -1,4 +1,6 @@
-namespace WeddingSeatingApp
+using WeddingSeatingApp.DesignPatterns.Iterator;
+
+namespace WeddingSeatingApp.DesignPatterns.Composite
 {
      public class Family : WeddingComponent, IEnumerable<Guest>
     {
@@ -36,11 +38,9 @@ namespace WeddingSeatingApp
 
         public IEnumerator<Guest> GetEnumerator()
         {
-            foreach (var member in members)
-            {
-                yield return member;
-            }
+            return FamilyIterator.Iterate(members);
         }
+
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {

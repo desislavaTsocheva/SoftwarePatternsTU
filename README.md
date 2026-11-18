@@ -1,4 +1,4 @@
-# 💗 Wedding Seating Planner
+# Wedding Seating Planner
 
 <p align="center">
   <img src="https://img.shields.io/badge/C%23-Windows%20Forms-DB91A5?style=for-the-badge&logo=csharp&logoColor=white" />
@@ -10,7 +10,7 @@
   <em>Because every beautiful wedding starts with a little organization. ♡</em>
 </p>
 
-## 🌷 About the Project
+## About the Project
 
 **Wedding Seating Planner** is a C# Windows Forms desktop application designed to simplify wedding guest management and seating arrangements.
 
@@ -20,22 +20,21 @@ The application provides an elegant, interactive interface for managing these re
 
 Developed as part of a **Software Design Patterns** university project, it demonstrates how object-oriented programming and three design patterns — **Composite, Strategy, and Iterator** — can be combined in a practical desktop application.
 
-## 🎀 Features
+## Features
 
-| Feature                            | Description                                                       |
-| ---------------------------------- | ----------------------------------------------------------------- |
-| 💌 Family Management               | Create families and organize their members.                       |
-| 👥 Guest Management                | Add individual guests to a selected family.                       |
-| 🪑 Table Management                | Create wedding reception tables.                                  |
-| ✨ Automatic Seating                | Generate seating arrangements using a dedicated seating strategy. |
-| 🚫 Family Restrictions             | Select specific pairs of families that must not share a table.    |
-| 💕 Seating Validation              | Respect table capacity and family compatibility rules.            |
-| 🌸 Interactive Table Visualization | View tables as circular layouts with individual seats.            |
-| 🎯 Table Selection                 | Click a table to see its assigned families and guests.            |
-| 📊 Live Statistics                 | Display the current numbers of families, guests, and tables.      |
-| 🎨 Romantic Interface              | Enjoy a soft pink, rose, and burgundy visual theme.               |
+| Feature                         | Description                                                       |
+| ------------------------------- | ----------------------------------------------------------------- |
+| Family Management               | Create families and organize their members.                       |
+| Guest Management                | Add individual guests to a selected family.                       |
+| Table Management                | Create wedding reception tables.                                  |
+| Automatic Seating               | Generate seating arrangements using a dedicated seating strategy. |
+| Family Restrictions             | Select specific pairs of families that must not share a table.    |
+| Seating Validation              | Respect table capacity and family compatibility rules.            |
+| Interactive Table Visualization | View tables as circular layouts with individual seats.            |
+| Table Selection                 | Click a table to see its assigned families and guests.            |
+| Live Statistics                 | Display the current numbers of families, guests, and tables.      |
 
-## 🖥️ Application Interface
+## Application Interface
 
 The application features a wedding-inspired design with soft pink backgrounds, rose-colored buttons, elegant typography, and interactive seating diagrams.
 
@@ -59,7 +58,7 @@ Users can select a table to inspect its seating details and generate a new seati
 &#x20; \<img src="./WeddingSeatingApp/img.png" width="900" alt="Wedding Seating Planner application interface" />
 \</p>
 
-## 🧁 Technologies Used
+## Technologies Used
 
 - **C#** — Main programming language.
 - **Windows Forms (WinForms)** — Desktop graphical user interface.
@@ -69,13 +68,13 @@ Users can select a table to inspect its seating details and generate a new seati
 - **LINQ** — Collection queries and data processing.
 - **Design Patterns** — Composite, Strategy, and Iterator.
 
-## 💎 Software Architecture
+## Software Architecture
 
 The project separates application entities, seating algorithms, collection traversal, and user interface responsibilities.
 
 Three design patterns are implemented and organized into dedicated folders to make their roles easier to identify and understand.
 
-### 💕 Composite Pattern
+### Composite Pattern
 
 The **Composite Pattern** organizes individual guests and groups of guests through a shared abstraction.
 
@@ -92,7 +91,7 @@ The pattern provides a consistent way to work with guests, families, and tables.
 
 For example, `GetCount()` allows the application to calculate the number of guests represented by a component.
 
-### ✨ Strategy Pattern
+### Strategy Pattern
 
 The **Strategy Pattern** separates the seating algorithm from the Windows Forms interface.
 
@@ -114,7 +113,7 @@ The seating algorithm considers several requirements:
 
 The separation makes it possible to introduce additional seating strategies without redesigning the user interface.
 
-### 🌸 Iterator Pattern
+### Iterator Pattern
 
 The **Iterator Pattern** provides sequential access to collection elements without requiring the user interface to work directly with their internal storage.
 
@@ -129,7 +128,7 @@ The application uses `IEnumerable<T>` and `IEnumerator<T>` to traverse collectio
 
 This allows the application to use `foreach` when displaying family members or examining the families assigned to a table.
 
-### 🎀 Why These Patterns?
+### Why These Patterns?
 
 Each design pattern addresses a different aspect of the application:
 
@@ -139,7 +138,7 @@ Each design pattern addresses a different aspect of the application:
 
 Together, they improve separation of responsibilities, maintainability, and extensibility.
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 WeddingSeatingApp/
@@ -166,7 +165,7 @@ WeddingSeatingApp/
 └── img.png
 ```
 
-## 💗 How It Works
+## How It Works
 
 1. **Create families** — Register the families attending the wedding.
 2. **Add guests** — Select a family and add its individual members.
@@ -177,7 +176,7 @@ WeddingSeatingApp/
 
 The application checks seating constraints while assigning families and informs the user if a valid arrangement cannot be found.
 
-## 🖥️ Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -250,7 +249,7 @@ The project focuses on:
 ---
 
 <p align="center">
-  Made with ♡, C# and a little bit of pink magic.
+  Made with ♡, C# and a little bit of pink.
   <br/>
-  <em>Making wedding planning a little more beautiful, one table at a time. 🌷</em>
+  <em>Making wedding planning a little more beautiful</em>
 </p>

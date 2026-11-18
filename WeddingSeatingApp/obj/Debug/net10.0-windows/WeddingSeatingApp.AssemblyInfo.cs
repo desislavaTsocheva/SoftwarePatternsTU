@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WeddingSeatingApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7505f12020b863748ccca3f99fba5cfaea83f19c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d795a936ddfa4a55639ff2e544216207dd0d26c")]
 [assembly: System.Reflection.AssemblyProductAttribute("WeddingSeatingApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WeddingSeatingApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,5 +1,7 @@
 #nullable disable
-namespace WeddingSeatingApp
+using WeddingSeatingApp;
+
+namespace WeddingSeatingApp.DesignPatterns.Composite
 {
  public class Guest : WeddingComponent
     {

@@ -1,4 +1,6 @@
-namespace WeddingSeatingApp
+using WeddingSeatingApp.DesignPatterns.Composite;
+
+namespace WeddingSeatingApp.DesignPatterns.Strategy
 {
     public interface ISeatingStrategy
     {
