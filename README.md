@@ -206,7 +206,7 @@ Use **Build → Build Solution**.
 
 Press `F5` or select **Start** in Visual Studio.
 
-## 🌷 Future Improvements
+## Future Improvements
 
 The application can be extended with additional functionality:
 
@@ -221,7 +221,7 @@ The application can be extended with additional functionality:
 - [ ] Custom reception floor plans.
 - [ ] Manual adjustments after automatic seating.
 
-## 🎓 Academic Purpose
+## Academic Purpose
 
 This project was developed as part of the **Software Design Patterns** coursework at the Technical University.
 
@@ -236,7 +236,7 @@ The project focuses on:
 - Designing a user-friendly graphical interface.
 - Solving a practical seating arrangement problem with configurable restrictions.
 
-## 🎀 Author
+## Author
 
 **Desislava Tsocheva**
 
