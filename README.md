@@ -12,133 +12,230 @@
 
 ## 🌷 About the Project
 
-**Wedding Seating Planner** is a Windows Forms desktop application developed in C# to make organizing wedding guests and creating seating arrangements easier and more enjoyable.
+**Wedding Seating Planner** is a C# Windows Forms desktop application designed to simplify wedding guest management and seating arrangements.
 
-Planning a wedding involves many little details, and deciding where everyone should sit can quickly become complicated. This application provides a simple and elegant way to manage families, register guests, create tables and automatically generate seating arrangements.
+Organizing a wedding reception involves more than creating a guest list. Families need to be grouped together, table capacities must be respected, and certain families may need to be seated separately.
 
-Designed with a romantic aesthetic and built using object-oriented programming principles and software design patterns, the application combines functionality with a user-friendly experience.
+The application provides an elegant, interactive interface for managing these requirements and automatically generating seating arrangements.
+
+Developed as part of a **Software Design Patterns** university project, it demonstrates how object-oriented programming and three design patterns — **Composite, Strategy, and Iterator** — can be combined in a practical desktop application.
 
 ## 🎀 Features
 
-| Feature | Description |
-|---|---|
-| 💌 Family Management | Create and manage wedding guest families. |
-| 👥 Guest Management | Add individual guests to their respective families. |
-| 🪑 Table Management | Create and organize wedding reception tables. |
-| ✨ Automatic Seating | Automatically assign guests to available tables. |
-| 🚫 Seating Restrictions | Define families that should not be seated together. |
-| 🌸 User-Friendly Interface | Enjoy a clean, elegant and easy-to-use desktop interface. |
+| Feature                            | Description                                                       |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| 💌 Family Management               | Create families and organize their members.                       |
+| 👥 Guest Management                | Add individual guests to a selected family.                       |
+| 🪑 Table Management                | Create wedding reception tables.                                  |
+| ✨ Automatic Seating                | Generate seating arrangements using a dedicated seating strategy. |
+| 🚫 Family Restrictions             | Select specific pairs of families that must not share a table.    |
+| 💕 Seating Validation              | Respect table capacity and family compatibility rules.            |
+| 🌸 Interactive Table Visualization | View tables as circular layouts with individual seats.            |
+| 🎯 Table Selection                 | Click a table to see its assigned families and guests.            |
+| 📊 Live Statistics                 | Display the current numbers of families, guests, and tables.      |
+| 🎨 Romantic Interface              | Enjoy a soft pink, rose, and burgundy visual theme.               |
+
+## 🖥️ Application Interface
+
+The application features a wedding-inspired design with soft pink backgrounds, rose-colored buttons, elegant typography, and interactive seating diagrams.
+
+The interface is organized into three main areas:
+
+**Dashboard**
+
+Displays live statistics for registered families, individual guests, and available tables.
+
+**Families & Guests**
+
+Allows users to create families, add guests, browse registered family members, and define seating restrictions between specific families.
+
+**Wedding Tables**
+
+Provides a visual overview of reception tables, including circular seating diagrams, occupied seats, table capacity, and assigned guests.
+
+Users can select a table to inspect its seating details and generate a new seating arrangement using the application’s seating algorithm.
+
+\<p align="center">
+&#x20; \<img src="./WeddingSeatingApp/img.png" width="900" alt="Wedding Seating Planner application interface" />
+\</p>
 
 ## 🧁 Technologies Used
 
-- **C#** – Main programming language.
-- **Windows Forms** – Graphical user interface.
-- **.NET** – Application framework.
-- **Object-Oriented Programming (OOP)** – Organized and reusable application structure.
-- **Design Patterns** – Implementation of the Strategy Pattern, Iterator Pattern and Composite Pattern.
-## 💎 Software Design
+- **C#** — Main programming language.
+- **Windows Forms (WinForms)** — Desktop graphical user interface.
+- **.NET** — Application framework.
+- **Object-Oriented Programming** — Encapsulation, inheritance, abstraction, and polymorphism.
+- **System.Drawing** — Custom graphical rendering of circular tables and seats.
+- **LINQ** — Collection queries and data processing.
+- **Design Patterns** — Composite, Strategy, and Iterator.
 
-One of the main goals of this project is to demonstrate how software design principles and design patterns can be applied to a practical application.
+## 💎 Software Architecture
 
-### ✨ Strategy Pattern
+The project separates application entities, seating algorithms, collection traversal, and user interface responsibilities.
 
-The project implements the **Strategy Design Pattern** to separate the seating algorithm from the rest of the application.
-
-Instead of directly embedding the seating logic inside the user interface, the application uses an abstraction:
-
-- `ISeatingStrategy` – Defines the seating strategy contract.
-- `SequentialSeatingStrategy` – Provides a concrete implementation for sequential guest assignment.
-
-This approach makes the application easier to maintain and allows different seating algorithms to be introduced in the future without significantly changing the existing code.
-
-### 🌸 Iterator Pattern
-
-The **Iterator Design Pattern** provides a way to access elements of a collection sequentially without exposing its internal structure.
-
-In the context of the wedding seating planner, this pattern can be used to traverse collections of families, guests, or tables in a consistent way.
-
-It helps keep collection traversal separate from the main application logic and makes it easier to work with groups of wedding guests.
+Three design patterns are implemented and organized into dedicated folders to make their roles easier to identify and understand.
 
 ### 💕 Composite Pattern
 
-The **Composite Design Pattern** allows individual objects and groups of objects to be treated in a uniform way.
+The **Composite Pattern** organizes individual guests and groups of guests through a shared abstraction.
 
-In a wedding seating application, this pattern can represent the relationship between families and their guests, allowing both individual guests and groups to be handled through a common abstraction.
+The application uses `WeddingComponent` as a common base class for wedding-related entities.
 
-It helps organize the application around a hierarchical structure and makes operations on groups of guests easier to manage.
+| Class              | Role      | Responsibility                                     |
+| ------------------ | --------- | -------------------------------------------------- |
+| `WeddingComponent` | Component | Defines common operations for wedding entities.    |
+| `Guest`            | Leaf      | Represents an individual wedding guest.            |
+| `Family`           | Composite | Contains and manages individual guests.            |
+| `Table`            | Composite | Contains and manages families assigned to a table. |
+
+The pattern provides a consistent way to work with guests, families, and tables.
+
+For example, `GetCount()` allows the application to calculate the number of guests represented by a component.
+
+### ✨ Strategy Pattern
+
+The **Strategy Pattern** separates the seating algorithm from the Windows Forms interface.
+
+Instead of implementing seating logic directly inside `Form1`, the application delegates the process to a strategy.
+
+| Class                       | Role               | Responsibility                                   |
+| --------------------------- | ------------------ | ------------------------------------------------ |
+| `ISeatingStrategy`          | Strategy Interface | Defines the contract for seating algorithms.     |
+| `SequentialSeatingStrategy` | Concrete Strategy  | Implements automatic family-to-table assignment. |
+| `Form1`                     | Client             | Selects and executes the seating strategy.       |
+
+The seating algorithm considers several requirements:
+
+- A table can accommodate a maximum of **10 guests**.
+- A table can contain a maximum of **2 families**.
+- Families marked as incompatible cannot share a table.
+- Families are assigned together rather than split between tables.
+- The algorithm searches for a valid arrangement and reports when the available tables cannot accommodate all families.
+
+The separation makes it possible to introduce additional seating strategies without redesigning the user interface.
+
+### 🌸 Iterator Pattern
+
+The **Iterator Pattern** provides sequential access to collection elements without requiring the user interface to work directly with their internal storage.
+
+The application uses `IEnumerable<T>` and `IEnumerator<T>` to traverse collections of guests and families.
+
+| Class            | Responsibility                                          |
+| ---------------- | ------------------------------------------------------- |
+| `FamilyIterator` | Traverses the guests belonging to a family.             |
+| `TableIterator`  | Traverses the families assigned to a table.             |
+| `Family`         | Exposes guest iteration through `IEnumerable<Guest>`.   |
+| `Table`          | Exposes family iteration through `IEnumerable<Family>`. |
+
+This allows the application to use `foreach` when displaying family members or examining the families assigned to a table.
 
 ### 🎀 Why These Patterns?
 
-Together, these design patterns demonstrate different approaches to creating flexible and maintainable software:
+Each design pattern addresses a different aspect of the application:
 
-- **Strategy** – Makes seating algorithms interchangeable.
-- **Iterator** – Simplifies sequential access to collections.
-- **Composite** – Organizes individual objects and groups through a common structure.
+- **Composite** organizes guests, families, and tables into a hierarchical structure.
+- **Strategy** separates the seating algorithm from the interface.
+- **Iterator** provides consistent traversal of guest and family collections.
 
-By applying these patterns, the project demonstrates how thoughtful software design can improve code organization, flexibility, and maintainability.
+Together, they improve separation of responsibilities, maintainability, and extensibility.
 
-### 🌷 Object-Oriented Structure
+## 📂 Project Structure
 
-The application uses separate classes to represent its main entities:
+```text
+WeddingSeatingApp/
+│
+├── DesignPatterns/
+│   │
+│   ├── Composite/
+│   │   ├── WeddingComponent.cs
+│   │   ├── Guest.cs
+│   │   ├── Family.cs
+│   │   └── Table.cs
+│   │
+│   ├── Strategy/
+│   │   ├── ISeatingStrategy.cs
+│   │   └── SequentialSeatingStrategy.cs
+│   │
+│   └── Iterator/
+│       ├── FamilyIterator.cs
+│       └── TableIterator.cs
+│
+├── Form1.cs
+├── Form1.Designer.cs
+├── Program.cs
+└── img.png
+```
 
-- `Family` – Represents a guest family and its members.
-- `Guest` – Represents an individual wedding guest.
-- `Table` – Represents a wedding reception table.
-- `Form1` – Handles the graphical interface and user interactions.
+## 💗 How It Works
+
+1. **Create families** — Register the families attending the wedding.
+2. **Add guests** — Select a family and add its individual members.
+3. **Define restrictions** — Choose two families that should not sit together.
+4. **Create tables** — Add the required number of reception tables.
+5. **Generate seating** — Run the automatic seating algorithm.
+6. **Explore the arrangement** — Click on a table to view its assigned families and guests.
+
+The application checks seating constraints while assigning families and informs the user if a valid arrangement cannot be found.
 
 ## 🖥️ Getting Started
 
 ### Prerequisites
 
-Before running the project, make sure you have:
+To run the application, you need:
 
-- Windows operating system.
-- Visual Studio.
-- .NET SDK compatible with the project configuration.
-- Windows Forms development support.
+- Windows 10 or Windows 11.
+- Visual Studio with the **.NET desktop development** workload.
+- A .NET SDK compatible with the project's configuration.
 
 ### Installation
 
-1. Clone the repository:
+**1. Clone the repository**
 
-   ```bash
-   git clone https://github.com/desislavaTsocheva/SoftwarePatternsTU.git
-   ```
+```bash
+git clone https://github.com/desislavaTsocheva/SoftwarePatternsTU.git
+```
 
-2. Open the repository folder.
+**2. Open the project**
 
-3. Locate the `WeddingSeatingApp` project.
+Navigate to the `WeddingSeatingApp` directory and open its solution or project file in Visual Studio.
 
-4. Open the solution or project file in Visual Studio.
+**3. Build the application**
 
-5. Build and run the application.
+Use **Build → Build Solution**.
 
-## 💕 Future Improvements
+**4. Run the application**
 
-There is always room for a little more magic!
+Press `F5` or select **Start** in Visual Studio.
 
-Some ideas for future development include:
+## 🌷 Future Improvements
+
+The application can be extended with additional functionality:
 
 - [ ] Custom table capacities.
 - [ ] Drag-and-drop guest assignment.
-- [ ] More seating strategies.
+- [ ] Additional seating algorithms.
 - [ ] Guest search and filtering.
-- [ ] Editing and removing guests.
-- [ ] Saving and loading wedding arrangements.
-- [ ] Exporting seating plans.
-- [ ] A visual representation of the wedding reception layout.
+- [ ] Editing and removing guests and families.
+- [ ] Removing existing seating restrictions.
+- [ ] Saving and loading seating arrangements.
+- [ ] Exporting seating plans to PDF.
+- [ ] Custom reception floor plans.
+- [ ] Manual adjustments after automatic seating.
 
-## 🌸 Project Purpose
+## 🎓 Academic Purpose
 
-This project was created as part of **Software Design Patterns** coursework at the Technical University.
+This project was developed as part of the **Software Design Patterns** coursework at the Technical University.
 
-Its purpose is to demonstrate the practical application of object-oriented programming, clean code organization and design patterns through a real-world inspired desktop application.
+Its primary objective is to demonstrate the practical application of object-oriented programming and established design patterns in a functional desktop application.
 
-## 🌷 Interface
+The project focuses on:
 
-<p align="center">
-  <img src="/WeddingSeatingApp/img.png" width="900" alt="Wedding Seating Planner">
-</p>
+- Applying the Composite, Strategy, and Iterator patterns.
+- Separating application logic from presentation logic.
+- Organizing code into clearly defined responsibilities.
+- Implementing collection traversal and hierarchical structures.
+- Designing a user-friendly graphical interface.
+- Solving a practical seating arrangement problem with configurable restrictions.
 
 ## 🎀 Author
 
